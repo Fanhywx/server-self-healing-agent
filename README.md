@@ -1,3 +1,14 @@
+---
+AIGC:
+    Label: "1"
+    ContentProducer: 001191440300708461136T1XGW3
+    ProduceID: 4db3d6020e5dae9fc01abfb35ecd8e50_b4f39f29cfc811f1acb8525400638852
+    ReservedCode1: EuwFM/edFGcSftxBJdT0XRIwt8qwPqvAyhwDeUaK0RnSWafZMEhYjBEpWjWDnFGEYn8TNVeivkla7u7h93+vVfxrwo8O3rbmHSCp2XRocR0NSpzA174bIo2e0kOm3vannfRawivToWh+YPQZyISD19r+iiGDlUCcSQl/2kecPBUfQdG6hlDhsPYGGjw=
+    ContentPropagator: 001191440300708461136T1XGW3
+    PropagateID: 4db3d6020e5dae9fc01abfb35ecd8e50_b4f39f29cfc811f1acb8525400638852
+    ReservedCode2: EuwFM/edFGcSftxBJdT0XRIwt8qwPqvAyhwDeUaK0RnSWafZMEhYjBEpWjWDnFGEYn8TNVeivkla7u7h93+vVfxrwo8O3rbmHSCp2XRocR0NSpzA174bIo2e0kOm3vannfRawivToWh+YPQZyISD19r+iiGDlUCcSQl/2kecPBUfQdG6hlDhsPYGGjw=
+---
+
 # Server-Side Fault Self-Healing Agent
 
 A multi-model collaborative agent system that automatically detects, diagnoses, and repairs server-side application faults through a ticket-based human-in-the-loop workflow.
@@ -137,3 +148,4 @@ The self-healing process follows a structured ticket-based workflow:
 - Local models run on GPU when available; CPU fallback is supported
 - The sandbox environment uses a separate Flask instance to isolate test patches from the main application
 - Visual checks use screenshot capture and AI vision models rather than DOM inspection
+*（内容由AI生成，仅供参考）*
