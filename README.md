@@ -73,7 +73,7 @@ pip install flask streamlit requests openai pillow pyyaml
 ```
 
 > ⚠️ 部署前请将 `YOUR_API_KEY_HERE` 替换为实际的 ModelVerse API Key。
-
+> ⚠️ 模型使用的api为[⚠️](https://api.modelverse.cn/v1/chat/completions)
 ### 运行系统
 
 ```bash
