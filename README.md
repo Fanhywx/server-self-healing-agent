@@ -1,76 +1,66 @@
----
-AIGC:
-    Label: "1"
-    ContentProducer: 001191440300708461136T1XGW3
-    ProduceID: 4db3d6020e5dae9fc01abfb35ecd8e50_b4f39f29cfc811f1acb8525400638852
-    ReservedCode1: EuwFM/edFGcSftxBJdT0XRIwt8qwPqvAyhwDeUaK0RnSWafZMEhYjBEpWjWDnFGEYn8TNVeivkla7u7h93+vVfxrwo8O3rbmHSCp2XRocR0NSpzA174bIo2e0kOm3vannfRawivToWh+YPQZyISD19r+iiGDlUCcSQl/2kecPBUfQdG6hlDhsPYGGjw=
-    ContentPropagator: 001191440300708461136T1XGW3
-    PropagateID: 4db3d6020e5dae9fc01abfb35ecd8e50_b4f39f29cfc811f1acb8525400638852
-    ReservedCode2: EuwFM/edFGcSftxBJdT0XRIwt8qwPqvAyhwDeUaK0RnSWafZMEhYjBEpWjWDnFGEYn8TNVeivkla7u7h93+vVfxrwo8O3rbmHSCp2XRocR0NSpzA174bIo2e0kOm3vannfRawivToWh+YPQZyISD19r+iiGDlUCcSQl/2kecPBUfQdG6hlDhsPYGGjw=
----
 
-# Server-Side Fault Self-Healing Agent
+# 服务端故障自愈 Agent
 
-A multi-model collaborative agent system that automatically detects, diagnoses, and repairs server-side application faults through a ticket-based human-in-the-loop workflow.
+一个基于多模型协作的 Agent 系统，通过工单驱动的人机协同工作流，自动检测、诊断并修复服务端应用故障。
 
-## Architecture Overview
+## 架构概览
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                     User / Dashboard                         │
-│              (Streamlit Web Console)                         │
+│                     用户 / Dashboard                         │
+│              (Streamlit Web 控制台)                          │
 └──────────────────┬──────────────────────────────────────────┘
                    │
                    ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                    Ticket Agent (Orchestrator)               │
+│                    Ticket Agent (编排器)                     │
 │  ┌─────────┐ ┌──────────┐ ┌──────────┐ ┌──────────────┐   │
 │  │ Filter  │ │ Generate │ │ Patch    │ │ Sandbox      │   │
 │  │ (Qwen3) │ │ (DeepSeek)│ │ (Kimi K2)│ │ Validation   │   │
 │  └────┬────┘ └────┬─────┘ └────┬─────┘ └──────┬───────┘   │
 │       │           │            │               │             │
 │       ▼           ▼            ▼               ▼             │
-│  [Local]     [Cloud API]  [Cloud API]    [Local:8081]        │
-│  QWEN3-7B    DeepSeek V4.1  Kimi K2.7      Flask Target App   │
-│  GPU         Flash         Code           + Visual Check     │
+│  [本地]     [云端 API]  [云端 API]    [本地:8081]            │
+│  QWEN3-7B    DeepSeek V4.1  Kimi K2.7      Flask 目标应用     │
+│  GPU         Flash         Code           + 视觉校验          │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## Core Components
+## 核心组件
 
-| Component | File | Description |
-|-----------|------|-------------|
-| **Target Application** | `target_app.py` | Flask web app with intentional faults for testing |
-| **Dashboard** | `dashboard.py` | Streamlit console for monitoring, ticket management, and manual review |
-| **Self-Heal Engine** | `self_heal.py` | Orchestrates the full repair pipeline |
-| **Diagnose Module** | `diagnose.py` | Error analysis and root cause identification |
-| **Ticket Agent** | `ticket_agent.py` | Multi-model orchestration engine |
-| **Offline Fallback** | `offline_fallback.py` | Local-only repair when cloud APIs are unavailable |
-| **Common Utils** | `common_utils.py` | Shared utilities (logging, config loading, etc.) |
-| **Visual Check** | `visual_check.py` | Screenshot-based UI verification after patching |
+| 组件 | 文件 | 说明 |
+|------|------|------|
+| **目标应用** | `target_app.py` | Flask Web 应用，包含故意设置的故障用于测试 |
+| **控制台** | `dashboard.py` | Streamlit 管理控制台，用于监控、工单管理和人工审核 |
+| **自愈引擎** | `self_heal.py` | 编排完整的修复流水线 |
+| **诊断模块** | `diagnose.py` | 错误分析与根因定位 |
+| **工单 Agent** | `ticket_agent.py` | 多模型协作编排引擎 |
+| **离线回退** | `offline_fallback.py` | 云 API 不可用时的本地修复方案 |
+| **通用工具** | `common_utils.py` | 共享工具函数（日志、配置加载等） |
+| **视觉校验** | `visual_check.py` | 基于截图的 UI 验证模块 |
 
-## Technology Stack
+## 技术栈
 
-- **Backend**: Python 3.10+, Flask, Streamlit
-- **AI Models**:
-  - DeepSeek V4.1 Flash — Fault diagnosis & solution generation
-  - Kimi K2.7 Code — Code patch generation
-  - DeepSeek V4 Flash Vision — Visual verification via screenshots
-  - QWEN3-7B (local) — Initial request filtering & offline fallback
-- **API Provider**: ModelVerse (`https://api.modelverse.cn/v1`)
-- **Deployment**: Ubuntu 22.04, Nginx reverse proxy
+- **后端**: Python 3.10+, Flask, Streamlit
+- **AI 模型**:
+  - DeepSeek V4.1 Flash — 故障诊断与解决方案生成
+  - Kimi K2.7 Code — 代码补丁生成
+  - DeepSeek V4 Flash Vision — 截图视觉验证
+  - QWEN3-7B（本地）— 初始请求过滤与离线回退
+- **API 提供商**: ModelVerse (`https://api.modelverse.cn/v1`)
+- **部署**: Ubuntu 22.04, Nginx 反向代理
 
-## Quick Start
+## 快速开始
 
-### Prerequisites
+### 前置条件
 
 ```bash
 pip install flask streamlit requests openai pillow pyyaml
 ```
 
-### Configuration
+### 配置
 
-Edit `config.json`:
+编辑 `config.json`:
 
 ```json
 {
@@ -82,70 +72,70 @@ Edit `config.json`:
 }
 ```
 
-> ⚠️ Replace `YOUR_API_KEY_HERE` with your actual ModelVerse API key before deployment.
+> ⚠️ 部署前请将 `YOUR_API_KEY_HERE` 替换为实际的 ModelVerse API Key。
 
-### Run the System
+### 运行系统
 
 ```bash
-# Terminal 1: Start target application
+# 终端 1：启动目标应用
 python target_app.py
 
-# Terminal 2: Start dashboard
+# 终端 2：启动控制台
 streamlit run dashboard.py
 ```
 
-Access the dashboard at `http://localhost:8501`.
+访问 `http://localhost:8501` 打开控制台。
 
-## How It Works
+## 工作流程
 
-The self-healing process follows a structured ticket-based workflow:
+自愈过程遵循结构化的工单驱动工作流：
 
-1. **Request Filtering** — Local QWEN3-7B model filters incoming fault reports to determine if they require automated handling.
+1. **请求过滤** — 本地 QWEN3-7B 模型过滤传入的故障报告，判断是否需要自动化处理。
 
-2. **Fault Diagnosis** — DeepSeek V4.1 Flash analyzes error logs and stack traces to identify the root cause.
+2. **故障诊断** — DeepSeek V4.1 Flash 分析错误日志和堆栈跟踪，识别根因。
 
-3. **Solution Generation** — DeepSeek generates a proposed fix strategy based on the diagnosis.
+3. **方案生成** — DeepSeek 根据诊断结果生成修复策略。
 
-4. **Patch Generation** — Kimi K2.7 Code produces the actual code patch to fix the identified issue.
+4. **补丁生成** — Kimi K2.7 Code 生成实际修复代码补丁。
 
-5. **Sandbox Validation** — The patched code is deployed to an isolated sandbox environment (port 8081) for functional testing.
+5. **沙箱验证** — 补丁代码部署到隔离的沙箱环境（端口 8081）进行功能测试。
 
-6. **Visual Verification** — deepseek-vision-exp captures screenshots of the patched application and verifies UI correctness.
+6. **视觉验证** — deepseek-vision-exp 截取补丁后应用的截图，验证 UI 正确性。
 
-7. **Human Review Gate** — All patches enter an `await_review` state requiring manual approval before merging into production.
+7. **人工审核** — 所有补丁进入 `await_review` 状态，需用户手动审批后方可合并。
 
-8. **Preview & Merge** — Approved patches are previewed on port 8095, then merged by the user via the dashboard.
+8. **预览与合并** — 审批通过的补丁在端口 8095 预览，随后由用户在控制台中合并到生产环境。
 
-## Features
+## 功能特性
 
-- **Multi-model Collaboration**: Leverages specialized models for different stages of the repair pipeline
-- **Ticket-Based Workflow**: Structured process with clear state transitions and audit trail
-- **Sandbox Isolation**: Patches are validated in isolated environments before affecting production
-- **Visual Verification**: AI-powered screenshot comparison ensures UI changes are correct
-- **Human-in-the-Loop**: Final merge requires explicit user approval
-- **Offline Fallback**: Local QWEN3-7B can handle simple fixes without cloud dependencies
-- **Real-time Monitoring**: Streamlit dashboard shows live status of all tickets and processes
+- **多模型协作**：利用不同模型的专业能力完成修复流程各阶段
+- **工单驱动**：结构化流程，状态流转清晰，可追溯审计
+- **沙箱隔离**：补丁先在隔离环境中验证，不影响生产环境
+- **视觉验证**：AI 驱动的截图对比确保 UI 变更正确
+- **人机协同**：最终合并需用户显式批准
+- **离线回退**：本地 QWEN3-7B 可处理简单故障，无需云端依赖
+- **实时监控**：Streamlit 控制台实时展示所有工单和处理状态
 
-## File Reference
+## 文件参考
 
-| File | Purpose |
-|------|---------|
-| `config.json` | Configuration file (API keys, ports, model settings) |
-| `main.py` | Entry point that starts all services |
-| `target_app.py` | Flask target application with intentional faults |
-| `dashboard.py` | Streamlit management console |
-| `self_heal.py` | Main self-healing orchestration logic |
-| `diagnose.py` | Fault diagnosis module |
-| `ticket_agent.py` | Multi-model ticket processing agent |
-| `offline_fallback.py` | Local-only fallback repair mechanism |
-| `visual_check.py` | Screenshot-based visual verification |
-| `common_utils.py` | Shared utility functions |
+| 文件 | 用途 |
+|------|------|
+| `config.json` | 配置文件（API Key、端口、模型设置） |
+| `main.py` | 服务入口，启动所有组件 |
+| `target_app.py` | Flask 目标应用，含故意设置的故障 |
+| `dashboard.py` | Streamlit 管理控制台 |
+| `self_heal.py` | 主自愈编排逻辑 |
+| `diagnose.py` | 故障诊断模块 |
+| `ticket_agent.py` | 多模型工单处理 Agent |
+| `offline_fallback.py` | 本地回退修复机制 |
+| `visual_check.py` | 截图视觉验证模块 |
+| `common_utils.py` | 通用工具函数 |
 
-## Design Notes
+## 设计说明
 
-- The system is designed as a proof-of-concept for server-side fault self-healing using LLM agents
-- All cloud API calls go through ModelVerse's unified endpoint
-- Local models run on GPU when available; CPU fallback is supported
-- The sandbox environment uses a separate Flask instance to isolate test patches from the main application
-- Visual checks use screenshot capture and AI vision models rather than DOM inspection
+- 本系统作为使用 LLM Agent 实现服务端故障自愈的概念验证
+- 所有云端 API 调用均通过 ModelVerse 统一端点
+- 本地模型在有 GPU 时运行；支持 CPU 降级
+- 沙箱环境使用独立的 Flask 实例，将测试补丁与主应用隔离
+- 视觉检查采用截图捕获加 AI 视觉模型，而非 DOM 检查
 *（内容由AI生成，仅供参考）*
