@@ -1,0 +1,28 @@
+{
+  "openai_base_url": "https://api.modelverse.cn/v1",
+  "openai_api_key": "UPvuLoXu4PnCJibWD55cB4D7-f6cC-4a01-bE94-E1C61271",
+  "model_name": "deepseek-v4.1-flash",
+  "providers": [
+    {
+      "name": "deepseek-v4.1-flash",
+      "model": "deepseek-v4.1-flash",
+      "base_url": "https://api.modelverse.cn/v1",
+      "api_key": "YOUR_API_KEY_HERE",
+      "enabled": true
+    },
+    {
+      "name": "kimi-k2.7-code",
+      "model": "kimi-k2.7-code",
+      "base_url": "https://api.modelverse.cn/v1",
+      "api_key": "YOUR_API_KEY_HERE",
+      "enabled": true
+    },
+    {
+      "name": "deepseek-v4-flash-vision-exp",
+      "model": "deepseek-v4-flash-vision-exp",
+      "base_url": "https://api.modelverse.cn/v1",
+      "api_key": "YOUR_API_KEY_HERE",
+      "enabled": true
+    }
+  ]
+}
