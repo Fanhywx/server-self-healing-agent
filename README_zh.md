@@ -1,13 +1,3 @@
----
-AIGC:
-    Label: "1"
-    ContentProducer: 001191440300708461136T1XGW3
-    ProduceID: 4db3d6020e5dae9fc01abfb35ecd8e50_b60f6030cfc811f1acb8525400638852
-    ReservedCode1: LiYZW4brJvqqR4Vl78S9N45tE3NevmWKz04DuXWQyUPIpH/6ZlqR2Sw1t/VlXDxhMT7YFgQ8JbLeFHJu2tSGczQgwge5ZeAMyMv3swxjk1cXRnUgQD2Mi9DVz95T8uAt87M+hShd0sTc4Ng82vyteiW11Tzf/ewR/Gk74wJa6kQv5oZhPSxwKQnG77Y=
-    ContentPropagator: 001191440300708461136T1XGW3
-    PropagateID: 4db3d6020e5dae9fc01abfb35ecd8e50_b60f6030cfc811f1acb8525400638852
-    ReservedCode2: LiYZW4brJvqqR4Vl78S9N45tE3NevmWKz04DuXWQyUPIpH/6ZlqR2Sw1t/VlXDxhMT7YFgQ8JbLeFHJu2tSGczQgwge5ZeAMyMv3swxjk1cXRnUgQD2Mi9DVz95T8uAt87M+hShd0sTc4Ng82vyteiW11Tzf/ewR/Gk74wJa6kQv5oZhPSxwKQnG77Y=
----
 
 # 服务端故障自愈 Agent
 
